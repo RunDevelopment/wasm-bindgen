@@ -108,9 +108,9 @@ impl InstructionBuilder<'_, '_> {
                     &[AdapterType::I32],
                 );
             },
-            Descriptor::StringEnum { name, invalid, .. } => {
+            Descriptor::StringEnum { name, invalid, variants , .. } => {
                 self.instruction(
-                    &[AdapterType::StringEnum],
+                    &[AdapterType::StringEnum(variants.clone())],
                     Instruction::StringEnumToWasm {
                         name: name.clone(),
                         invalid: *invalid,
@@ -310,9 +310,10 @@ impl InstructionBuilder<'_, '_> {
                 name,
                 invalid,
                 hole,
+                variants,
             } => {
                 self.instruction(
-                    &[AdapterType::StringEnum.option()],
+                    &[AdapterType::StringEnum(variants.clone()).option()],
                     Instruction::OptionStringEnumToWasm {
                         name: name.clone(),
                         invalid: *invalid,

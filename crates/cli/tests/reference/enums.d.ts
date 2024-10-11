@@ -12,14 +12,14 @@ export function enum_echo(color: Color): Color;
 export function option_enum_echo(color?: Color): Color | undefined;
 /**
  * @param {Color} color
- * @returns {any}
+ * @returns {"green" | "yellow" | "red"}
  */
-export function get_name(color: Color): any;
+export function get_name(color: Color): "green" | "yellow" | "red";
 /**
- * @param {any | undefined} [color]
- * @returns {any | undefined}
+ * @param {"green" | "yellow" | "red" | undefined} [color]
+ * @returns {"green" | "yellow" | "red" | undefined}
  */
-export function option_string_enum_echo(color?: any): any | undefined;
+export function option_string_enum_echo(color?: "green" | "yellow" | "red"): "green" | "yellow" | "red" | undefined;
 /**
  * A color.
  */

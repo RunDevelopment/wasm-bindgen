@@ -1441,7 +1441,20 @@ fn adapter2ts(ty: &AdapterType, dst: &mut String) {
         AdapterType::NamedExternref(name) => dst.push_str(name),
         AdapterType::Struct(name) => dst.push_str(name),
         AdapterType::Enum(name) => dst.push_str(name),
-        AdapterType::StringEnum => dst.push_str("any"),
+        AdapterType::StringEnum(variants) => {
+            if variants.is_empty() {
+                dst.push_str("never");
+            } else {
+                fn stringify(s: &str) -> String {
+                    format!("\"{}\"", s.escape_default())
+                }
+                dst.push_str(&stringify(&variants[0]));
+                for variant in &variants[1..] {
+                    dst.push_str(" | ");
+                    dst.push_str(&stringify(variant));
+                }
+            }
+        }
         AdapterType::Function => dst.push_str("any"),
     }
 }

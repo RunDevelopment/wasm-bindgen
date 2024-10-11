@@ -1172,6 +1172,15 @@ impl ToTokens for ast::StringEnum {
 
         let wasm_bindgen = &self.wasm_bindgen;
 
+        let describe_variants = self.variant_values.iter().map(|variant_value| {
+            let length = variant_value.len() as u32;
+            let chars = variant_value.chars().map(u32::from);
+            quote! {
+                inform(#length);
+                #(inform(#chars);)*
+            }
+        });
+
         (quote! {
             #(#attrs)*
             #[non_exhaustive]
@@ -1248,6 +1257,7 @@ impl ToTokens for ast::StringEnum {
                     inform(#name_len);
                     #(inform(#name_chars);)*
                     inform(#variant_count);
+                    #(#describe_variants)*
                 }
             }
 

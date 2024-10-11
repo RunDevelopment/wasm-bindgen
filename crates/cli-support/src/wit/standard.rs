@@ -86,7 +86,7 @@ pub enum AdapterType {
     Option(Box<AdapterType>),
     Struct(String),
     Enum(String),
-    StringEnum,
+    StringEnum(Vec<String>),
     NamedExternref(String),
     Function,
     NonNull,
